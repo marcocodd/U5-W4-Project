@@ -1,4 +1,6 @@
 package marco.U5W4Project.payloads;
 
-public record ErrorsResponseDTO() {
+import java.time.LocalDateTime;
+
+public record ErrorsResponseDTO(String message, LocalDateTime messageTime) {
 }

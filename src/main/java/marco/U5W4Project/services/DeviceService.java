@@ -9,5 +9,5 @@ public class DeviceService {
     @Autowired
     private DeviceDAO deviceDAO;
 
-    
+
 }

@@ -23,17 +23,21 @@ public class Worker {
     private String surname;
     @Setter
     private String email;
+    @Setter
+    private String avatar;
+
     @OneToMany
     private List<Device> device;
 
     public Worker() {
     }
 
-    public Worker(String username, String name, String surname, String email) {
+    public Worker(String username, String name, String surname, String email, String avatar) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.avatar = avatar;
     }
 
 }
