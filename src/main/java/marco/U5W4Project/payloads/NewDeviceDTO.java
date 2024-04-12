@@ -1,6 +1,5 @@
 package marco.U5W4Project.payloads;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,7 +13,7 @@ public record NewDeviceDTO(@NotEmpty(message = "type can't be blank")
                            boolean maintenance,
                            @NotNull(message = "retired must be true or false")
                            boolean retired,
-                           @Min(value = 1, message = "workerId must be at least 1")
+
                            long workerId) {
 
 }

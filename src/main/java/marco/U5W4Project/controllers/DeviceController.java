@@ -5,6 +5,7 @@ import marco.U5W4Project.exceptions.BadRequestException;
 import marco.U5W4Project.payloads.NewDeviceDTO;
 import marco.U5W4Project.payloads.NewDeviceResponseDTO;
 import marco.U5W4Project.services.DeviceService;
+import marco.U5W4Project.services.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class DeviceController {
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    WorkerService workerService;
 
     @GetMapping
     public Page<Device> getAllWorkers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size, @RequestParam(defaultValue = "id") String sortBy) {
@@ -28,6 +31,7 @@ public class DeviceController {
         return this.deviceService.findById(deviceId);
     }
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NewDeviceResponseDTO saveDevice(@RequestBody @Validated NewDeviceDTO body, BindingResult validation) {
@@ -35,6 +39,13 @@ public class DeviceController {
             throw new BadRequestException(validation.getAllErrors());
         }
         return new NewDeviceResponseDTO(this.deviceService.save(body).getId());
+    }
+
+    // non sono sicurissimo di ciò che ho provato con Patch ecc http://localhost:3001/devices/assign?deviceId=55&workerId=102
+    @PatchMapping("/assign")
+    public NewDeviceResponseDTO assignDeviceToWorker(@RequestParam long deviceId, @RequestParam long workerId) {
+        deviceService.assignDeviceToWorker(deviceId, workerId);
+        return new NewDeviceResponseDTO(deviceId);
     }
 
     @PutMapping("/{deviceId}")
@@ -48,4 +59,6 @@ public class DeviceController {
     public void findByIdAndDelete(@PathVariable long deviceId) {
         this.deviceService.findByIdAndDelete(deviceId);
     }
+
+
 }

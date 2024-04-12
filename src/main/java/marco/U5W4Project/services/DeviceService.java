@@ -45,7 +45,7 @@ public class DeviceService {
             return deviceDAO.save(newDevice);
         } else {
 
-            if (body.workerId() != 0 && body.assigned() == false) {
+            if (body.workerId() != 0 && !body.assigned()) {
                 throw new BadRequestException("Non è possibile specificare un lavoratore quando assigned è false.");
             }
 
@@ -89,4 +89,10 @@ public class DeviceService {
         this.deviceDAO.delete(found);
     }
 
+    public void assignDeviceToWorker(long deviceId, long workerId) {
+        Device device = deviceDAO.findById(deviceId).orElseThrow(() -> new NotFoundException(deviceId));
+        Worker worker = workerService.findById(workerId);
+        device.setWorker(worker);
+        deviceDAO.save(device);
+    }
 }
