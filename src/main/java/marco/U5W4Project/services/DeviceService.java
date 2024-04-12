@@ -25,10 +25,12 @@ public class DeviceService {
         if (body.assigned()) {
 
             if (body.workerId() == 0) {
-                throw new BadRequestException("L'ID del lavoratore non è stato fornito.");
+                throw new BadRequestException("workerId can't be 0.");
             }
 
+
             Worker worker = workerService.findById(body.workerId());
+
 
             Device newDevice = new Device(
                     body.type(),
@@ -42,6 +44,11 @@ public class DeviceService {
 
             return deviceDAO.save(newDevice);
         } else {
+
+            if (body.workerId() != 0 && body.assigned() == false) {
+                throw new BadRequestException("Non è possibile specificare un lavoratore quando assigned è false.");
+            }
+
 
             Device newDevice = new Device(
                     body.type(),

@@ -1,5 +1,6 @@
 package marco.U5W4Project.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,8 @@ public class Worker {
     @Setter
     private String avatar;
 
-    @OneToMany
+    @OneToMany(mappedBy = "worker")
+    @JsonIgnore
     private List<Device> device;
 
     public Worker() {
