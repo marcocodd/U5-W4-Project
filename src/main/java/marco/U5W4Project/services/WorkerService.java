@@ -32,7 +32,6 @@ public class WorkerService {
         this.workerDAO.findByUsername(body.username()).ifPresent(worker -> {
             throw new BadRequestException("Username " + worker.getUsername() + "already exists");
         });
-
         Worker newWorker = new Worker(body.username(), body.name(), body.surname(), body.email(), "https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
         return workerDAO.save(newWorker);
     }
@@ -61,9 +60,11 @@ public class WorkerService {
         this.workerDAO.delete(found);
     }
 
-    public String uploadAvatar(MultipartFile image) throws IOException {
+    public Worker uploadAvatar(long workerId, MultipartFile image) throws IOException {
+        Worker found = this.findById(workerId);
         String url = (String) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
-        return url;
+        found.setAvatar(url);
+        return workerDAO.save(found);
     }
 
 }

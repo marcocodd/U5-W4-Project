@@ -52,9 +52,9 @@ public class WorkerController {
         this.workerService.findByIdAndDelete(workerId);
     }
 
-    @PostMapping("/avatar")
-    public String uploadAvatar(@RequestParam("avatar") MultipartFile avatar) throws IOException {
-        return this.workerService.uploadAvatar(avatar);
+    @PostMapping("/{workerId}/avatar")
+    public Worker uploadAvatar(@RequestParam("avatar") MultipartFile avatar, @PathVariable long workerId) throws IOException {
+        return this.workerService.uploadAvatar(workerId, avatar);
 
     }
 }
