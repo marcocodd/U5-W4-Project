@@ -32,6 +32,7 @@ public class WorkerService {
         this.workerDAO.findByUsername(body.username()).ifPresent(worker -> {
             throw new BadRequestException("Username " + worker.getUsername() + "already exists");
         });
+        
         Worker newWorker = new Worker(body.username(), body.name(), body.surname(), body.email(), "https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
         return workerDAO.save(newWorker);
     }

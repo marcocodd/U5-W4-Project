@@ -26,6 +26,7 @@ public class Device {
 
     @ManyToOne
     @JoinColumn(name = "worker_id")
+    @Setter
     private Worker worker;
 
 
@@ -38,5 +39,14 @@ public class Device {
         this.assigned = assigned;
         this.maintenance = maintenance;
         this.retired = retired;
+    }
+
+    public Device(String type, boolean available, boolean assigned, boolean maintenance, boolean retired, Worker worker) {
+        this.type = type;
+        this.available = available;
+        this.assigned = assigned;
+        this.maintenance = maintenance;
+        this.retired = retired;
+        this.worker = worker;
     }
 }
