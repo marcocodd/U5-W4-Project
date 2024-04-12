@@ -57,6 +57,7 @@ public class DeviceController {
     @DeleteMapping("/{deviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable long deviceId) {
+
         this.deviceService.findByIdAndDelete(deviceId);
     }
 

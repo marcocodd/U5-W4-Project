@@ -46,6 +46,7 @@ public class WorkerController {
         return this.workerService.findByIdAndUpdate(workerId, body);
     }
 
+    //
     @DeleteMapping("/{workerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable long workerId) {

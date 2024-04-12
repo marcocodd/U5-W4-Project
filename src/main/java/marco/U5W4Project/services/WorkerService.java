@@ -32,7 +32,7 @@ public class WorkerService {
         this.workerDAO.findByUsername(body.username()).ifPresent(worker -> {
             throw new BadRequestException("Username " + worker.getUsername() + "already exists");
         });
-        
+
         Worker newWorker = new Worker(body.username(), body.name(), body.surname(), body.email(), "https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname());
         return workerDAO.save(newWorker);
     }
@@ -58,7 +58,11 @@ public class WorkerService {
 
     public void findByIdAndDelete(long userId) {
         Worker found = this.findById(userId);
-        this.workerDAO.delete(found);
+        if (found.getDevice().isEmpty())
+            this.workerDAO.delete(found);
+        else {
+            throw new BadRequestException("worker with id: " + found.getId() + " can't be deleted, he has devices connected");
+        }
     }
 
     public Worker uploadAvatar(long workerId, MultipartFile image) throws IOException {
